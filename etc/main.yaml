@@ -1,0 +1,21 @@
+Name: main
+Host: 0.0.0.0
+Port: 8888
+
+
+
+Postgres:
+  DataSource: postgresql://postgres:123456@192.168.35.136:5432/experiment?sslmode=disable # 这里填写你的postgresql数据库连接字符串
+
+
+Auth:
+  AccessSecret: uOvKLmVfztaXGpNYd4Z0I1SiT7MweJhl
+  AccessExpire: 86400
+
+CacheRedis:
+  - Host: 192.168.35.139:6379
+    Pass: ""
+    Type: node
+
+
+Salt: HWVOFkGgPTryzICwd7qnJaZR9KQ2i8xe

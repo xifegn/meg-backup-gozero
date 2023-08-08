@@ -1,0 +1,6 @@
+syntax = "v1"
+
+import "./predict.api"
+import "./doctor.api"
+import "./admin.api"
+import "./common.api"

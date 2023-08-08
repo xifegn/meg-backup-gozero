@@ -1,0 +1,253 @@
+syntax = "v1"
+
+//import "./common.api"
+
+info(
+    title: "type title here"
+    desc: "type desc here"
+    author: "type author here"
+    email: "type email here"
+    version: "type version here"
+)
+
+type (
+    LoginRequest {
+        Username string `json:"username"`
+        Password string `json:"password"`
+    }
+
+    LoginResponse {
+        AccessToken  string `json:"accessToken"`
+        AccessExpire int64  `json:"accessExpire"`
+    }
+
+    RegisterRequest {
+        Username    string `json:"username"`
+        Password    string `json:"password"`
+        IsAdmin    int64   `json:"isAdmin"`
+        Name        string  `json:"name"`
+        Number      string  `json:"number"`
+    }
+
+    RegisterResponse {
+        Code    int64 `json:"code"`
+        Message string `json:"message"`
+    }
+
+    ChangePasswordRequest {
+        Username    string  `json:"username"`
+        OldPassword string `json:"oldPassword"`
+        NewPassword string `json:"newPassword"`
+    }
+
+    ChangePasswordResponse {
+        Code    int64   `json:"code"`
+        Message string  `json:"message"`
+    }
+
+    ChangePhoneNumberRequest {
+        Username    string  `json:"username"`
+        Password    string  `json:"password"`
+        PhoneNumber string `json:"phonenumber"`
+    }
+
+    ChangePhoneNumberResponse {
+        Message     string  `json:"message"`
+    }
+
+    ChangeEmailRequest {
+        Username    string `json:"username"`
+        Password    string `json:"password"`
+        Email       string `json:"email"`
+    }
+    ChangeEmailResponse {
+        Message     string `json:"message"`
+    }
+
+    InsertDoctorInfoRequest {
+        Email   string `json:"email"`
+        Nickname    string `json:"nickname"`
+        Regions     string `json:"regions"`
+        SelfInformation string  `json:"selfInformation"`
+        Did     string `json:"did"`
+    }
+    InsertDoctorInfoResponse {
+        Message     string `json:"message"`
+    }
+
+    GetDoctorInfoRequest {
+        Username    string  `form:"username"`
+    }
+    GetDoctorInfoResponse {
+        Username    string  `json:"username"`
+        Phonenumber string  `json:"phonenumber"`
+        Id  int64 `json:"id"`
+        SecretKey   string `json:"secretKey"`
+        Email       string `json:"email"`
+        Nickname    string `json:"nickname"`
+        Regions     string `json:"regions"`
+        SelfInformation string `json:"selfInformation"`
+    }
+
+    InsertCaseRequest {
+        Body    string `json:"body"`
+        Cid     string `json:"cid"`
+    }
+
+    InsertCaseResponse {
+        Message string `json:"message"`
+    }
+
+    QueryCaseRequest {
+        Cid string `form:"cid"`
+    }
+    QueryCaseResponse {
+        Body    string `json:"body"`
+    }
+
+    CardInfo {
+        CardValue string `json:"cardValue"`
+        Name string `json:"name"`
+        Value int64 `json:"value"`
+    }
+
+    GetDataRequest {
+        Username    string `form:"username"`
+    }
+    GetDataResponse {
+        Data []CardInfo `json:"data"`
+    }
+
+    RemoveFilePathRequest {
+        FilePath    string `json:"filePath"`
+    }
+    RemoveFilePathResponse {
+        Message     string  `json:"message"`
+    }
+
+    QuotaApplyInqueryResponse {
+        Id  int64 `json:"id"`
+        Username    string `json:"username"`
+        Quota       int64 `json:"quota"`
+        Amount      int64 `json:"amount"`
+        CreatedAt   string `json:"createdAt"`
+    }
+
+    QuotaApplyRemoveRequest {
+        Id      int64 `json:"id"`
+    }
+    QuotaApplyRemoveResponse {
+        Message     string `json:"message"`
+    }
+
+    QuotaInquiryRequest {
+        Username    string  `form:"username"`
+    }
+    DailyCallInfo {
+        DailyCallLimit string `json:"DailyCallLimit"`
+        CallNumbers string `json:"callNumbers"`
+        CallVolumes string `json:"callVolumes"`
+        Type string `json:"type"`
+    }
+    QuotaInquiryResponse {
+        Data []DailyCallInfo    `json:"data"`
+    }
+
+    GetAllRequest {
+        Did     string  `form:"did"`
+    }
+    PatientInfo {
+        Id   int64 `json:"id"`
+        Did         string `json:"did"`
+        Name        string  `json:"name"`
+        Sex         string  `json:"sex"`
+        Age         int64   `json:"age"`
+        UploadTime  string  `json:"uploadTime"`
+        Code        string  `json:"code"`
+        FilePath    string  `json:"filePath"`
+    }
+    GetAllResponse {
+        Data []PatientInfo `json:"data"`
+    }
+
+    GetPatientFilePathRequest {
+        Code        string `json:"code"`
+    }
+    GetPatientFilePathResponse {
+        Key     int64 `json:"key"`
+        FileName    string `json:"fileName"`
+    }
+
+    InsertPatientRequest {
+        Username        string  `json:"username"`
+        Name            string  `json:"name"`
+        Sex             string  `json:"sex"`
+        Age             int64   `json:"age"`
+        Code            int64   `json:"code"`
+    }
+    InsertPatientResponse {
+        Message     string  `json:"message"`
+    }
+)
+
+@server (
+    group: doctor
+)
+service main {
+    @handler Login
+    post /login (LoginRequest) returns (LoginResponse)
+
+    @handler Register
+    post /register (RegisterRequest) returns (RegisterResponse)
+
+    @handler QuotaApplyRemove
+    post /quota_apply_remove (QuotaApplyRemoveRequest) returns (QuotaApplyRemoveResponse)
+}
+
+@server (
+    jwt: Auth
+    group: doctor
+)
+service main{
+    @handler ChangePassword
+    post /change_password (ChangePasswordRequest) returns (ChangePasswordResponse)
+
+    @handler ChangePhoneNumber
+    post /change_phonenumber (ChangePhoneNumberRequest) returns (ChangePhoneNumberResponse)
+
+    @handler ChangeEmail
+    post /change_email (ChangeEmailRequest) returns (ChangeEmailResponse)
+
+    @handler InsertDoctorInfo
+    post /insert_doctor_info (InsertDoctorInfoRequest) returns (InsertDoctorInfoResponse)
+
+    @handler GetDoctorInfo
+    get /get_doctor_info (GetDoctorInfoRequest) returns (GetDoctorInfoResponse)
+
+    @handler InsertCase
+    post /insert_case (InsertCaseRequest) returns (InsertCaseResponse)
+
+    @handler QueryCase
+    get /query_case (QueryCaseRequest) returns (QueryCaseResponse)
+
+    @handler GetData
+    get /get_data (GetDataRequest) returns (GetDataResponse)
+
+    @handler RemoveFilePath
+    post /remove_file_path (RemoveFilePathRequest) returns (RemoveFilePathResponse)
+
+    @handler QuotaApplyInquery
+    get /quota_apply_inquery returns (QuotaApplyInqueryResponse)
+
+    @handler QuotaInquiry
+    get /quota_inquiry (QuotaInquiryRequest) returns (QuotaInquiryResponse)
+
+    @handler GetAll
+    get /getall (GetAllRequest) returns (GetAllResponse)
+
+    @handler GetPatientFilePath
+    get /get_patient_file_path (GetPatientFilePathRequest) returns (GetPatientFilePathResponse)
+
+    @handler InsertPatient
+    post /insert_patient (InsertPatientRequest) returns (InsertPatientResponse)
+}

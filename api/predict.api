@@ -1,0 +1,78 @@
+syntax = "v1"
+
+info(
+    title: "type title here"
+    desc: "type desc here"
+    author: "type author here"
+    email: "type email here"
+    version: "type version here"
+)
+
+
+type (
+    PredictRequest{
+        Code    string `form:"code"`
+    }
+
+    PredictResponse{
+        Message     string `json:"message"`
+    }
+
+    UploadRequest {
+        Pid     string `json:"pid"`
+    }
+    UploadResponse {
+        Message     string  `json:"message"`
+    }
+
+    SmUploadResponse {
+        Url     string     `json:"url"`
+    }
+
+    DownloadFileRequest {
+        Filename string `path:"filename"`
+    }
+    DownloadFileResponse {
+        Data []byte `json:"data"`
+    }
+
+    SendPidRequest {
+        Current_pid string `json:"currentPid"`
+    }
+    SendPidResponse {
+        Message     string  `json:"message"`
+    }
+
+    GetPidResponse {
+        Message string `json:"message"`
+        CurrentPid  string  `json:"currentPid"`
+    }
+
+)
+@server (
+    group: download
+)
+service main {
+    @handler DownloadFile
+    get /download/:filename (DownloadFileRequest) returns (DownloadFileResponse)
+}
+
+@server (
+    group: preidct
+)
+service main{
+    @handler Predict
+    get /predict (PredictRequest) returns (PredictResponse)
+
+    @handler Upload
+    post /upload (UploadRequest) returns (UploadResponse)
+
+    @handler SmUpload
+    post /sm_upload returns (SmUploadResponse)
+
+    @handler SendPid
+    post /sendpid (SendPidRequest) returns (SendPidResponse)
+
+    @handler GetPid
+    get /getpid returns (GetPidResponse)
+}

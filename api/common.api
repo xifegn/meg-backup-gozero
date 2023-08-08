@@ -1,0 +1,22 @@
+syntax = "v1"
+
+info(
+    title: "type title here"
+    desc: "type desc here"
+    author: "type author here"
+    email: "type email here"
+    version: "type version here"
+)
+type (
+    TestResponse{
+        Message     string `json:"message"`
+    }
+
+)
+@server (
+    group: test
+)
+service main{
+    @handler Test
+    post /test returns (TestResponse)
+}

@@ -1,0 +1,120 @@
+syntax = "v1"
+
+//import "./common.api"
+
+info(
+    title: "type title here"
+    desc: "type desc here"
+    author: "type author here"
+    email: "type email here"
+    version: "type version here"
+)
+
+type (
+
+    CardInfoa {
+        CardValue string `json:"cardValue"`
+        Name string `json:"name"`
+        Value int64 `json:"value"`
+    }
+
+    GetAllDataResponse {
+        Data []CardInfoa `json:"data"`
+    }
+
+    RemoveDoctorRequest {
+        Username    string `json:"username"`
+    }
+    RemoveDoctorResponse {
+        Message     string `json:"message"`
+    }
+
+    RemovePatientRequest {
+        Id  string `json:"id"`
+    }
+    RemovePatientResponse {
+        Message     string  `json:"message"`
+    }
+
+
+    SeriesItem {
+        Data []int64 `json:"data"`
+        Name string `json:"name"`
+        Type string `json:"type"`
+    }
+
+
+    XAxis {
+        Data []string `json:"data"`
+    }
+
+
+    ChartDataResponse {
+        Max int64 `json:"max"`
+        Series []SeriesItem `json:"series"`
+        XAxis XAxis `json:"xAxis"`
+    }
+
+    QuotaApplyInsertRequest {
+        Username    string `json:"username"`
+        Amount      int64   `json:"amount"`
+    }
+    QuotaApplyInsertResponse {
+        Message     string  `json:"message"`
+    }
+
+    AddQuotaRequest {
+        Username    string `json:"username"`
+        Amount      int64   `json:"amount"`
+    }
+    AddQuotaResponse {
+        Message     string `json:"message"`
+    }
+
+    DoctorInfo {
+        Id      int64 `json:"id"`
+        Name    string `json:"name"`
+        RegisterTime    string  `json:"registerTime"`
+        Telephone   string  `json:"telephone"`
+        Username    string  `json:"username"`
+    }
+    AdminGetAllDoctorResponse {
+        Data []DoctorInfo `json:"data"`
+    }
+)
+
+@server (
+    group: admin
+)
+service main {
+    @handler Information
+    get /information returns (ChartDataResponse)
+
+    @handler QuotaApplyInsert
+    post /quota_apply_insert (QuotaApplyInsertRequest) returns (QuotaApplyInsertResponse)
+
+}
+
+
+
+@server (
+    jwt: Auth
+    group: admin
+)
+service main {
+    @handler GetAllData
+    get /get_all_data returns (GetAllDataResponse)
+
+    @handler RemoveDoctor
+    post /remove_doctor (RemoveDoctorRequest) returns (RemoveDoctorResponse)
+
+    @handler RemovePatient
+    post /remove_patient (RemovePatientRequest) returns (RemovePatientResponse)
+
+
+    @handler AddQuota
+    post /add_quota (AddQuotaRequest) returns (AddQuotaResponse)
+
+    @handler AdminGetAllDoctor
+    get /admingetalldoctor returns (AdminGetAllDoctorResponse)
+}
