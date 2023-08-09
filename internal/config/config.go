@@ -15,6 +15,6 @@ type Config struct {
 		DataSource string
 	}
 	CacheRedis cache.CacheConf
-	Path       string
-	Salt       string
+
+	Salt string
 }

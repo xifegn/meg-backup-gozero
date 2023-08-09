@@ -5,7 +5,7 @@ Port: 8888
 
 
 Postgres:
-  DataSource: postgresql://postgres:123456@192.168.35.136:5432/experiment?sslmode=disable # 这里填写你的postgresql数据库连接字符串
+  DataSource: postgresql://postgres:123456@192.168.35.136:5432/ttest?sslmode=disable
 
 
 Auth:
