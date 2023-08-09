@@ -55,7 +55,7 @@ type LoginResponse struct {
 type RegisterRequest struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
-	IsAdmin  int64  `json:"isAdmin"`
+	IsAdmin  int64  `json:"isAdmin,omitempty,default=0"`
 	Name     string `json:"name"`
 	Number   string `json:"number"`
 }
