@@ -1,6 +1,7 @@
 package doctor
 
 import (
+	"fmt"
 	"github.com/zeromicro/go-zero/rest/httpx"
 	"meg-backup-gozero/internal/logic/doctor"
 	"meg-backup-gozero/internal/svc"
@@ -13,6 +14,7 @@ func RegisterHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.RegisterRequest
 		if err := httpx.Parse(r, &req); err != nil {
+			fmt.Printf("type err %T", err)
 			httpx.Error(w, err)
 			return
 		}
