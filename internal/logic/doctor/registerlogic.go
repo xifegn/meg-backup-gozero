@@ -8,6 +8,7 @@ import (
 	"meg-backup-gozero/internal/svc"
 	"meg-backup-gozero/internal/types"
 	"meg-backup-gozero/models/doctor"
+	"time"
 )
 
 type RegisterLogic struct {
@@ -37,6 +38,7 @@ func (l *RegisterLogic) Register(req *types.RegisterRequest) (resp *types.Regist
 			IsAdmin:     req.IsAdmin,
 			Name:        req.Name,
 			Phonenumber: req.Number,
+			UploadTime:  time.Now(),
 		}
 		res, err := l.svcCtx.DoctorModel.Insert(l.ctx, &newDoctor)
 		if err != nil {
