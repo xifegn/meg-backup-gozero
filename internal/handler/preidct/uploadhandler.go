@@ -5,7 +5,6 @@ import (
 	"meg-backup-gozero/internal/logic/preidct"
 	"meg-backup-gozero/internal/svc"
 	"meg-backup-gozero/internal/types"
-	"meg-backup-gozero/response"
 	"net/http"
 )
 
@@ -16,9 +15,12 @@ func UploadHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			httpx.Error(w, err)
 			return
 		}
-
-		l := preidct.NewUploadLogic(r.Context(), svcCtx)
+		l := preidct.NewUploadLogic(r, svcCtx)
 		resp, err := l.Upload(&req)
-		response.Response(w, resp, err)
+		if err != nil {
+			httpx.ErrorCtx(r.Context(), w, err)
+		} else {
+			httpx.OkJsonCtx(r.Context(), w, resp)
+		}
 	}
 }
