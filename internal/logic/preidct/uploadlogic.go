@@ -2,6 +2,7 @@ package preidct
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	"github.com/levigross/grequests"
@@ -55,8 +56,8 @@ func (l *UploadLogic) Upload(req *types.UploadRequest) (resp *types.UploadRespon
 		}
 		fileUploads = append(fileUploads, fileUpload)
 	}
-
-	response, err := grequests.Post("http://127.0.0.1:5000/upload", &grequests.RequestOptions{
+	url := fmt.Sprint(l.svcCtx.Config.Url + "/upload")
+	response, err := grequests.Post(url, &grequests.RequestOptions{
 		Params:  map[string]string{"code": req.Code},
 		Files:   fileUploads,
 		Context: l.ctx,
