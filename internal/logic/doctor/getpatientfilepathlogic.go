@@ -23,8 +23,18 @@ func NewGetPatientFilePathLogic(ctx context.Context, svcCtx *svc.ServiceContext)
 	}
 }
 
-func (l *GetPatientFilePathLogic) GetPatientFilePath(req *types.GetPatientFilePathRequest) (resp *types.GetPatientFilePathResponse, err error) {
-	// todo: add your logic here and delete this line
+func (l *GetPatientFilePathLogic) GetPatientFilePath(req *types.GetPatientFilePathRequest) (resp []*types.GetPatientFilePathResponse, err error) {
+	res, err := l.svcCtx.PatientModel.FindPatientInfoByCode(l.ctx, req.Code)
+	if err != nil {
+		return nil, err
+	}
+	PatientFilePathInfoList := make([]*types.GetPatientFilePathResponse, 0)
+	for key, item := range res {
+		PatientFilePathInfoList = append(PatientFilePathInfoList, &types.GetPatientFilePathResponse{
+			Key:      int64(key) + 1,
+			FileName: item.FileName,
+		})
+	}
 
-	return
+	return PatientFilePathInfoList, nil
 }
