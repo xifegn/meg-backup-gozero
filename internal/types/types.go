@@ -224,7 +224,7 @@ type GetAllResponse struct {
 }
 
 type GetPatientFilePathRequest struct {
-	Code string `json:"code"`
+	Code string `form:"code"`
 }
 
 type GetPatientFilePathResponse struct {
