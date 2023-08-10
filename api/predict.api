@@ -1,15 +1,22 @@
 syntax = "v1"
 
 info(
-    title: "type title here"
-    desc: "type desc here"
-    author: "type author here"
-    email: "type email here"
-    version: "type version here"
+    title: "predict"
+    desc: "call the flask interface"
+    author: "west"
+    email: "xfeiyv@gmail.com"
+    version: "0.0"
 )
 
 
 type (
+    Base {
+        Code int    `json:"code"`
+        Msg  string `json:"msg"`
+    }
+    Message {
+        Message  string `json:"message"`
+    }
     PredictRequest{
         Code    string `form:"code"`
     }
@@ -19,10 +26,11 @@ type (
     }
 
     UploadRequest {
-        Pid     string `json:"pid"`
+        Code    string  `form:"code"`
     }
     UploadResponse {
-        Message     string  `json:"message"`
+        Base
+        Data    Message  `json:"data"`
     }
 
     SmUploadResponse {

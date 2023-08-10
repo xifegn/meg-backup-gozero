@@ -27,6 +27,7 @@ type (
         IsAdmin    int64   `json:"isAdmin,omitempty,default=0"`
         Name        string  `json:"name"`
         Number      string  `json:"number"`
+        UploadTime  string `json:"uploadTime, optional"`
     }
 
     RegisterResponse {
@@ -183,7 +184,8 @@ type (
         Name            string  `json:"name"`
         Sex             string  `json:"sex"`
         Age             int64   `json:"age"`
-        Code            int64   `json:"code"`
+        Code            int64   `json:"code, optional"`
+        UploadTime      string  `json:"uploadTime, optional"`
     }
     InsertPatientResponse {
         Message     string  `json:"message"`
