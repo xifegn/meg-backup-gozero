@@ -2,7 +2,7 @@ Name: main
 Host: 0.0.0.0
 Port: 8888
 
-
+MaxBytes: 1073741824
 
 Postgres:
   DataSource: postgresql://postgres:123456@192.168.35.136:5432/ttest?sslmode=disable
