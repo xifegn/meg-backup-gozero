@@ -172,8 +172,9 @@ type (
     }
 
     GetPatientFilePathRequest {
-        Code        string `json:"code"`
+        Code        string `form:"code"`
     }
+
     GetPatientFilePathResponse {
         Key     int64 `json:"key"`
         FileName    string `json:"fileName"`
