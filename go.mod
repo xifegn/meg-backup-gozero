@@ -4,6 +4,7 @@ go 1.20
 
 require (
 	github.com/golang-jwt/jwt v3.2.2+incompatible
+	github.com/levigross/grequests v0.0.0-20221222020224-9eee758d18d5
 	github.com/muhfajar/go-zero-cors-middleware v0.0.0-20211011142017-8c5bbca6202a
 	github.com/zeromicro/go-zero v1.5.4
 	golang.org/x/crypto v0.12.0
@@ -22,6 +23,7 @@ require (
 	github.com/go-sql-driver/mysql v1.7.1 // indirect
 	github.com/golang-jwt/jwt/v4 v4.5.0 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
+	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.15.0 // indirect
 	github.com/jackc/pgpassfile v1.0.0 // indirect
