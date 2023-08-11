@@ -37,8 +37,8 @@ type (
 
     ChangePasswordRequest {
         Username    string  `json:"username"`
-        OldPassword string `json:"oldPassword"`
-        NewPassword string `json:"newPassword"`
+        OldPassword string `json:"old_password"`
+        NewPassword string `json:"new_password"`
     }
 
     ChangePasswordResponse {
@@ -69,7 +69,7 @@ type (
         Email   string `json:"email"`
         Nickname    string `json:"nickname"`
         Regions     string `json:"regions"`
-        SelfInformation string  `json:"selfInformation"`
+        SelfInformation string  `json:"self_information"`
         Did     string `json:"did"`
     }
     InsertDoctorInfoResponse {
@@ -83,11 +83,11 @@ type (
         Username    string  `json:"username"`
         Phonenumber string  `json:"phonenumber"`
         Id  int64 `json:"id"`
-        SecretKey   string `json:"secretKey"`
+        SecretKey   string `json:"secretKey, optional"`
         Email       string `json:"email"`
         Nickname    string `json:"nickname"`
         Regions     string `json:"regions"`
-        SelfInformation string `json:"selfInformation"`
+        SelfInformation string `json:"self_information"`
     }
 
     InsertCaseRequest {
@@ -127,9 +127,9 @@ type (
     QuotaApplyInqueryResponse {
         Id  int64 `json:"id"`
         Username    string `json:"username"`
-        Quota       int64 `json:"quota"`
-        Amount      int64 `json:"amount"`
-        CreatedAt   string `json:"createdAt"`
+        QuotaAmount       string `json:"quota_amount"`
+        Amount      string `json:"amount"`
+        CreatedAt   string `json:"created_at"`
     }
 
     QuotaApplyRemoveRequest {
@@ -142,14 +142,11 @@ type (
     QuotaInquiryRequest {
         Username    string  `form:"username"`
     }
-    DailyCallInfo {
+    QuotaInquiryResponse {
         DailyCallLimit string `json:"DailyCallLimit"`
         CallNumbers string `json:"callNumbers"`
         CallVolumes string `json:"callVolumes"`
         Type string `json:"type"`
-    }
-    QuotaInquiryResponse {
-        Data []DailyCallInfo    `json:"data"`
     }
 
     GetAllRequest {

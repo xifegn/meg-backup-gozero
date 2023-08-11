@@ -85,8 +85,8 @@ type RegisterResponse struct {
 
 type ChangePasswordRequest struct {
 	Username    string `json:"username"`
-	OldPassword string `json:"oldPassword"`
-	NewPassword string `json:"newPassword"`
+	OldPassword string `json:"old_password"`
+	NewPassword string `json:"new_password"`
 }
 
 type ChangePasswordResponse struct {
@@ -118,7 +118,7 @@ type InsertDoctorInfoRequest struct {
 	Email           string `json:"email"`
 	Nickname        string `json:"nickname"`
 	Regions         string `json:"regions"`
-	SelfInformation string `json:"selfInformation"`
+	SelfInformation string `json:"self_information"`
 	Did             string `json:"did"`
 }
 
@@ -134,11 +134,11 @@ type GetDoctorInfoResponse struct {
 	Username        string `json:"username"`
 	Phonenumber     string `json:"phonenumber"`
 	Id              int64  `json:"id"`
-	SecretKey       string `json:"secretKey"`
+	SecretKey       string `json:"secretKey, optional"`
 	Email           string `json:"email"`
 	Nickname        string `json:"nickname"`
 	Regions         string `json:"regions"`
-	SelfInformation string `json:"selfInformation"`
+	SelfInformation string `json:"self_information"`
 }
 
 type InsertCaseRequest struct {
@@ -177,11 +177,11 @@ type RemoveFilePathResponse struct {
 }
 
 type QuotaApplyInqueryResponse struct {
-	Id        int64  `json:"id"`
-	Username  string `json:"username"`
-	Quota     int64  `json:"quota"`
-	Amount    int64  `json:"amount"`
-	CreatedAt string `json:"createdAt"`
+	Id          int64  `json:"id"`
+	Username    string `json:"username"`
+	QuotaAmount string `json:"quota_amount"`
+	Amount      string `json:"amount"`
+	CreatedAt   string `json:"created_at"`
 }
 
 type QuotaApplyRemoveRequest struct {
@@ -196,15 +196,11 @@ type QuotaInquiryRequest struct {
 	Username string `form:"username"`
 }
 
-type DailyCallInfo struct {
+type QuotaInquiryResponse struct {
 	DailyCallLimit string `json:"DailyCallLimit"`
 	CallNumbers    string `json:"callNumbers"`
 	CallVolumes    string `json:"callVolumes"`
 	Type           string `json:"type"`
-}
-
-type QuotaInquiryResponse struct {
-	Data []DailyCallInfo `json:"data"`
 }
 
 type GetAllRequest struct {
