@@ -2,9 +2,10 @@ package admin
 
 import (
 	"context"
-
 	"meg-backup-gozero/internal/svc"
 	"meg-backup-gozero/internal/types"
+	"meg-backup-gozero/models/quota"
+	"time"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -24,7 +25,14 @@ func NewQuotaApplyInsertLogic(ctx context.Context, svcCtx *svc.ServiceContext) *
 }
 
 func (l *QuotaApplyInsertLogic) QuotaApplyInsert(req *types.QuotaApplyInsertRequest) (resp *types.QuotaApplyInsertResponse, err error) {
-	// todo: add your logic here and delete this line
-
-	return
+	newData := quota.QuotaApply{
+		Amount:    req.Amount,
+		Username:  req.Username,
+		CreatedAt: time.Now(),
+	}
+	_, err = l.svcCtx.QuotaApplyModel.Insert(l.ctx, &newData)
+	if err != nil {
+		return nil, err
+	}
+	return &types.QuotaApplyInsertResponse{Message: "Insert success"}, nil
 }

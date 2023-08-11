@@ -38,7 +38,7 @@ func (l *InsertCaseLogic) InsertCase(req *types.InsertCaseRequest) (resp *types.
 		if err != nil {
 			return nil, err
 		}
-		return &types.InsertCaseResponse{Message: "OK"}, nil
+		return &types.InsertCaseResponse{Message: "Insert success"}, nil
 	}
 	//fmt.Println("----------------res", res)
 	updateCase := patient.PatientCases{
@@ -51,5 +51,5 @@ func (l *InsertCaseLogic) InsertCase(req *types.InsertCaseRequest) (resp *types.
 	if err != nil {
 		return nil, err
 	}
-	return &types.InsertCaseResponse{Message: "OK"}, nil
+	return &types.InsertCaseResponse{Message: "Update success"}, nil
 }

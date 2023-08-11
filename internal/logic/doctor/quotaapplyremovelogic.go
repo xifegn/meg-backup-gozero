@@ -24,7 +24,9 @@ func NewQuotaApplyRemoveLogic(ctx context.Context, svcCtx *svc.ServiceContext) *
 }
 
 func (l *QuotaApplyRemoveLogic) QuotaApplyRemove(req *types.QuotaApplyRemoveRequest) (resp *types.QuotaApplyRemoveResponse, err error) {
-	// todo: add your logic here and delete this line
-
-	return
+	err = l.svcCtx.QuotaApplyModel.Delete(l.ctx, req.Id)
+	if err != nil {
+		return nil, err
+	}
+	return &types.QuotaApplyRemoveResponse{Message: "delete success"}, nil
 }

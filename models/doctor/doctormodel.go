@@ -18,6 +18,25 @@ type getDataContainer struct {
 	PatientCount int64 `json:"patient_count"`
 }
 
+type DoctorContainer struct {
+	Id          int64  `json:"id"`
+	Username    string `json:"username"`
+	Password    string `json:"password"`
+	IsAdmin     int64  `json:"is_admin"`
+	Name        string `json:"name"`
+	Phonenumber string `json:"phonenumber"`
+	UploadTime  string `json:"upload_time"`
+}
+
+//	type DoctorInfoContainer struct {
+//		Id              int64  `json:"id"`
+//		Email           string `json:"email"`
+//		NickName        string `json:"nickname"`
+//		Regions         string `json:"regions"`
+//		SelfInformation string `json:"self_information"`
+//		SecretKey       string `json:"secret_key"`
+//		Did             string `json:"did"`
+//	}
 type (
 	// DoctorModel is an interface to be customized, add more methods here,
 	// and implement the added methods in customDoctorModel.
@@ -29,6 +48,10 @@ type (
 		GetDataByUsername(ctx context.Context, username string) ([]*getDataContainer, error)
 		GetData(ctx context.Context) ([]*getDataContainer, error)
 		FindIdByUsername(ctx context.Context, username string) (int64, error)
+		HaveDoctorInfo(ctx context.Context, did string) (int64, error)
+		//DoctorInfoByUsername(ctx context.Context, username string) ([]*types.GetDoctorInfoResponse, error)
+		GetAllDoctorByUsername(ctx context.Context, username string) ([]*DoctorContainer, error)
+		//GetAllDoctorInfoByUsername(ctx context.Context, username string) ([]*DoctorInfoContainer, error)
 	}
 
 	customDoctorModel struct {
@@ -40,6 +63,37 @@ type (
 func NewDoctorModel(conn sqlx.SqlConn, c cache.CacheConf, opts ...cache.Option) DoctorModel {
 	return &customDoctorModel{
 		defaultDoctorModel: newDoctorModel(conn, c, opts...),
+	}
+}
+
+//func (m *customDoctorModel) GetAllDoctorInfoByUsername(ctx context.Context, username string) ([]*DoctorInfoContainer, error) {
+//	query := fmt.Sprintf("select * from doctor_info where did = $1")
+//	var resp []*DoctorInfoContainer
+//	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, username)
+//	switch err {
+//	case nil:
+//		return resp, nil
+//	case sqlc.ErrNotFound:
+//		fmt.Println("----------------------------------------------sdfasdfadsf")
+//		return nil, errors.New("ErrNotFound")
+//	default:
+//		fmt.Println("-----------------------------------------------------------++++++++++++++++++++++++++++++")
+//
+//		return nil, errors.New("hahahaha")
+//	}
+//}
+
+func (m *customDoctorModel) GetAllDoctorByUsername(ctx context.Context, username string) ([]*DoctorContainer, error) {
+	query := fmt.Sprintf("select id, username, password, is_admin, name, phonenumber, upload_time from doctor where username=$1")
+	var resp []*DoctorContainer
+	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, username)
+	switch err {
+	case nil:
+		return resp, nil
+	case sqlc.ErrNotFound:
+		return nil, ErrNotFound
+	default:
+		return nil, err
 	}
 }
 
@@ -99,6 +153,20 @@ func (m *customDoctorModel) HaveCase(ctx context.Context, cid string) (int64, er
 	}
 }
 
+func (m *customDoctorModel) HaveDoctorInfo(ctx context.Context, did string) (int64, error) {
+	query := fmt.Sprintf("select id from doctor_info where did = $1")
+	var resp int64
+	err := m.QueryRowNoCacheCtx(ctx, &resp, query, did)
+	switch err {
+	case nil:
+		return resp, nil
+	case sqlc.ErrNotFound:
+		return -100, errors.New("ErrNotFound")
+	default:
+		return -100, errors.New("hahaha")
+	}
+}
+
 func (m *customDoctorModel) FindIdByUsername(ctx context.Context, username string) (int64, error) {
 	query := fmt.Sprintf("select id from doctor where username = $1")
 	var resp int64
@@ -127,3 +195,19 @@ func (m *customDoctorModel) AdminGetAllDoctor(ctx context.Context, code int64) (
 		return nil, err
 	}
 }
+
+//
+//func (m *customDoctorModel) DoctorInfoByUsername(ctx context.Context, username string) ([]*types.GetDoctorInfoRequest, error) {
+//	query := fmt.Sprintf("SELECT d.username, d.phonenumber, d.id, di.secret_key, di.email, d.name, di.regions, di.self_information FROM doctor d LEFT JOIN doctor_info di ON d.username = di.did WHERE d.username = $1")
+//	var resp []*types.GetDoctorInfoResponse
+//	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, username)
+//	switch err {
+//	case nil:
+//		return resp, nil
+//	case sqlc.ErrNotFound:
+//		return nil, err
+//	default:
+//		return nil, err
+//	}
+//}
+//
