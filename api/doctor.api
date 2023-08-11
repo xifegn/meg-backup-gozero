@@ -1,5 +1,5 @@
 syntax = "v1"
-
+//import "database/sql"
 //import "./common.api"
 
 info(
@@ -106,21 +106,19 @@ type (
         Body    string `json:"body"`
     }
 
-    CardInfo {
-        CardValue string `json:"cardValue"`
-        Name string `json:"name"`
-        Value int64 `json:"value"`
-    }
+
 
     GetDataRequest {
         Username    string `form:"username"`
     }
     GetDataResponse {
-        Data []CardInfo `json:"data"`
+        CardValue string `json:"cardValue"`
+        Name string `json:"name"`
+        Value int64 `json:"value"`
     }
 
     RemoveFilePathRequest {
-        FilePath    string `json:"filePath"`
+        FilePath    string `json:"file_path"`
     }
     RemoveFilePathResponse {
         Message     string  `json:"message"`
@@ -157,7 +155,9 @@ type (
     GetAllRequest {
         Did     string  `form:"did"`
     }
-    PatientInfo {
+
+
+    GetAllResponse {
         Id   int64 `json:"id"`
         Did         string `json:"did"`
         Name        string  `json:"name"`
@@ -166,9 +166,6 @@ type (
         UploadTime  string  `json:"uploadTime"`
         Code        string  `json:"code"`
         FilePath    string  `json:"filePath"`
-    }
-    GetAllResponse {
-        Data []PatientInfo `json:"data"`
     }
 
     GetPatientFilePathRequest {

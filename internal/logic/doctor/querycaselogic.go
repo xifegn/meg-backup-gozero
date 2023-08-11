@@ -2,6 +2,7 @@ package doctor
 
 import (
 	"context"
+	"errors"
 
 	"meg-backup-gozero/internal/svc"
 	"meg-backup-gozero/internal/types"
@@ -24,7 +25,10 @@ func NewQueryCaseLogic(ctx context.Context, svcCtx *svc.ServiceContext) *QueryCa
 }
 
 func (l *QueryCaseLogic) QueryCase(req *types.QueryCaseRequest) (resp *types.QueryCaseResponse, err error) {
-	// todo: add your logic here and delete this line
+	res, err := l.svcCtx.DoctorModel.QueryCaseByCid(l.ctx, req.Cid)
+	if err != nil {
+		return nil, errors.New("case not found")
+	}
 
-	return
+	return &types.QueryCaseResponse{Body: res}, nil
 }

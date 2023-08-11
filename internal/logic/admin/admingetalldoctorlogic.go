@@ -23,8 +23,20 @@ func NewAdminGetAllDoctorLogic(ctx context.Context, svcCtx *svc.ServiceContext) 
 	}
 }
 
-func (l *AdminGetAllDoctorLogic) AdminGetAllDoctor() (resp *types.AdminGetAllDoctorResponse, err error) {
-	// todo: add your logic here and delete this line
-
-	return
+func (l *AdminGetAllDoctorLogic) AdminGetAllDoctor() (resp []*types.AdminGetAllDoctorResponse, err error) {
+	res, err := l.svcCtx.DoctorModel.AdminGetAllDoctor(l.ctx, 0)
+	if err != nil {
+		return nil, err
+	}
+	doctorInfo := make([]*types.AdminGetAllDoctorResponse, 0)
+	for _, item := range res {
+		doctorInfo = append(doctorInfo, &types.AdminGetAllDoctorResponse{
+			Id:           item.Id,
+			Name:         item.Name,
+			RegisterTime: item.RegisterTime,
+			Telephone:    item.Telephone,
+			Username:     item.Username,
+		})
+	}
+	return doctorInfo, nil
 }

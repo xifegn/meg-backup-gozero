@@ -12,14 +12,11 @@ info(
 
 type (
 
-    CardInfoa {
+
+    GetAllDataResponse {
         CardValue string `json:"cardValue"`
         Name string `json:"name"`
         Value int64 `json:"value"`
-    }
-
-    GetAllDataResponse {
-        Data []CardInfoa `json:"data"`
     }
 
     RemoveDoctorRequest {
@@ -30,14 +27,14 @@ type (
     }
 
     RemovePatientRequest {
-        Id  string `json:"id"`
+        Id  int64 `json:"id"`
     }
     RemovePatientResponse {
         Message     string  `json:"message"`
     }
 
 
-    SeriesItem {
+    Series {
         Data []int64 `json:"data"`
         Name string `json:"name"`
         Type string `json:"type"`
@@ -51,7 +48,7 @@ type (
 
     ChartDataResponse {
         Max int64 `json:"max"`
-        Series []SeriesItem `json:"series"`
+        Series []Series `json:"series"`
         XAxis XAxis `json:"xAxis"`
     }
 
@@ -71,15 +68,12 @@ type (
         Message     string `json:"message"`
     }
 
-    DoctorInfo {
+    AdminGetAllDoctorResponse {
         Id      int64 `json:"id"`
         Name    string `json:"name"`
         RegisterTime    string  `json:"registerTime"`
         Telephone   string  `json:"telephone"`
         Username    string  `json:"username"`
-    }
-    AdminGetAllDoctorResponse {
-        Data []DoctorInfo `json:"data"`
     }
 )
 

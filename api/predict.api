@@ -17,6 +17,9 @@ type (
     Message {
         Message  string `json:"message"`
     }
+    Url {
+        Url     string `json:"url"`
+    }
     PredictRequest{
         Code    string `form:"code"`
     }
@@ -34,7 +37,8 @@ type (
     }
 
     SmUploadResponse {
-        Url     string     `json:"url"`
+        Base
+        Data    Url     `json:"data"`
     }
 
     DownloadFileRequest {
@@ -45,15 +49,17 @@ type (
     }
 
     SendPidRequest {
-        Current_pid string `json:"currentPid"`
+        CurrentPid int64 `json:"current_pid"`
     }
     SendPidResponse {
-        Message     string  `json:"message"`
+        Code        int64  `json:"code"`
+        Msg     string  `json:"msg"`
     }
 
     GetPidResponse {
-        Message string `json:"message"`
-        CurrentPid  string  `json:"currentPid"`
+        Code    int64  `json:"code"`
+         Msg    string `json:"msg"`
+        CurrentPid  int64  `json:"current_pid"`
     }
 
 )

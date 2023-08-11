@@ -65,6 +65,7 @@ func (l *UploadLogic) Upload(req *types.UploadRequest) (resp *types.UploadRespon
 	if err != nil {
 		return nil, err
 	}
+	defer response.Close()
 	if response.Ok {
 		var data TestInfo
 		err := response.JSON(&data)

@@ -2,11 +2,13 @@ package doctor
 
 import (
 	"context"
-
+	"database/sql"
+	"fmt"
+	"github.com/zeromicro/go-zero/core/logx"
 	"meg-backup-gozero/internal/svc"
 	"meg-backup-gozero/internal/types"
-
-	"github.com/zeromicro/go-zero/core/logx"
+	"meg-backup-gozero/models/patient"
+	"time"
 )
 
 type InsertCaseLogic struct {
@@ -24,7 +26,30 @@ func NewInsertCaseLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Insert
 }
 
 func (l *InsertCaseLogic) InsertCase(req *types.InsertCaseRequest) (resp *types.InsertCaseResponse, err error) {
-	// todo: add your logic here and delete this line
-
-	return
+	res, _ := l.svcCtx.DoctorModel.HaveCase(l.ctx, req.Cid)
+	if res == -100 {
+		fmt.Println("你好哈哈哈")
+		newCase := patient.PatientCases{
+			Body:       sql.NullString{req.Body, true},
+			CreateTime: time.Now(),
+			Cid:        req.Cid,
+		}
+		_, err := l.svcCtx.PatientCasesModel.Insert(l.ctx, &newCase)
+		if err != nil {
+			return nil, err
+		}
+		return &types.InsertCaseResponse{Message: "OK"}, nil
+	}
+	//fmt.Println("----------------res", res)
+	updateCase := patient.PatientCases{
+		Id:         res,
+		Body:       sql.NullString{req.Body, true},
+		CreateTime: time.Now(),
+		Cid:        req.Cid,
+	}
+	err = l.svcCtx.PatientCasesModel.Update(l.ctx, &updateCase)
+	if err != nil {
+		return nil, err
+	}
+	return &types.InsertCaseResponse{Message: "OK"}, nil
 }

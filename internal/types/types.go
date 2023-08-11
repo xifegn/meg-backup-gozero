@@ -10,6 +10,10 @@ type Message struct {
 	Message string `json:"message"`
 }
 
+type Url struct {
+	Url string `json:"url"`
+}
+
 type PredictRequest struct {
 	Code string `form:"code"`
 }
@@ -28,7 +32,8 @@ type UploadResponse struct {
 }
 
 type SmUploadResponse struct {
-	Url string `json:"url"`
+	Base
+	Data Url `json:"data"`
 }
 
 type DownloadFileRequest struct {
@@ -40,16 +45,18 @@ type DownloadFileResponse struct {
 }
 
 type SendPidRequest struct {
-	Current_pid string `json:"currentPid"`
+	CurrentPid int64 `json:"current_pid"`
 }
 
 type SendPidResponse struct {
-	Message string `json:"message"`
+	Code int64  `json:"code"`
+	Msg  string `json:"msg"`
 }
 
 type GetPidResponse struct {
-	Message    string `json:"message"`
-	CurrentPid string `json:"currentPid"`
+	Code       int64  `json:"code"`
+	Msg        string `json:"msg"`
+	CurrentPid int64  `json:"current_pid"`
 }
 
 type LoginRequest struct {
@@ -151,22 +158,18 @@ type QueryCaseResponse struct {
 	Body string `json:"body"`
 }
 
-type CardInfo struct {
-	CardValue string `json:"cardValue"`
-	Name      string `json:"name"`
-	Value     int64  `json:"value"`
-}
-
 type GetDataRequest struct {
 	Username string `form:"username"`
 }
 
 type GetDataResponse struct {
-	Data []CardInfo `json:"data"`
+	CardValue string `json:"cardValue"`
+	Name      string `json:"name"`
+	Value     int64  `json:"value"`
 }
 
 type RemoveFilePathRequest struct {
-	FilePath string `json:"filePath"`
+	FilePath string `json:"file_path"`
 }
 
 type RemoveFilePathResponse struct {
@@ -208,7 +211,7 @@ type GetAllRequest struct {
 	Did string `form:"did"`
 }
 
-type PatientInfo struct {
+type GetAllResponse struct {
 	Id         int64  `json:"id"`
 	Did        string `json:"did"`
 	Name       string `json:"name"`
@@ -217,10 +220,6 @@ type PatientInfo struct {
 	UploadTime string `json:"uploadTime"`
 	Code       string `json:"code"`
 	FilePath   string `json:"filePath"`
-}
-
-type GetAllResponse struct {
-	Data []PatientInfo `json:"data"`
 }
 
 type GetPatientFilePathRequest struct {
@@ -245,14 +244,10 @@ type InsertPatientResponse struct {
 	Message string `json:"message"`
 }
 
-type CardInfoa struct {
+type GetAllDataResponse struct {
 	CardValue string `json:"cardValue"`
 	Name      string `json:"name"`
 	Value     int64  `json:"value"`
-}
-
-type GetAllDataResponse struct {
-	Data []CardInfoa `json:"data"`
 }
 
 type RemoveDoctorRequest struct {
@@ -264,14 +259,14 @@ type RemoveDoctorResponse struct {
 }
 
 type RemovePatientRequest struct {
-	Id string `json:"id"`
+	Id int64 `json:"id"`
 }
 
 type RemovePatientResponse struct {
 	Message string `json:"message"`
 }
 
-type SeriesItem struct {
+type Series struct {
 	Data []int64 `json:"data"`
 	Name string  `json:"name"`
 	Type string  `json:"type"`
@@ -282,9 +277,9 @@ type XAxis struct {
 }
 
 type ChartDataResponse struct {
-	Max    int64        `json:"max"`
-	Series []SeriesItem `json:"series"`
-	XAxis  XAxis        `json:"xAxis"`
+	Max    int64    `json:"max"`
+	Series []Series `json:"series"`
+	XAxis  XAxis    `json:"xAxis"`
 }
 
 type QuotaApplyInsertRequest struct {
@@ -305,16 +300,12 @@ type AddQuotaResponse struct {
 	Message string `json:"message"`
 }
 
-type DoctorInfo struct {
+type AdminGetAllDoctorResponse struct {
 	Id           int64  `json:"id"`
 	Name         string `json:"name"`
 	RegisterTime string `json:"registerTime"`
 	Telephone    string `json:"telephone"`
 	Username     string `json:"username"`
-}
-
-type AdminGetAllDoctorResponse struct {
-	Data []DoctorInfo `json:"data"`
 }
 
 type TestResponse struct {

@@ -2,6 +2,8 @@ package preidct
 
 import (
 	"context"
+	"fmt"
+	"github.com/levigross/grequests"
 
 	"meg-backup-gozero/internal/svc"
 	"meg-backup-gozero/internal/types"
@@ -24,7 +26,26 @@ func NewSendPidLogic(ctx context.Context, svcCtx *svc.ServiceContext) *SendPidLo
 }
 
 func (l *SendPidLogic) SendPid(req *types.SendPidRequest) (resp *types.SendPidResponse, err error) {
-	// todo: add your logic here and delete this line
+	url := fmt.Sprint(l.svcCtx.Config.Url + "/sendpid")
+	response, err := grequests.Post(url, &grequests.RequestOptions{
+		JSON:    types.SendPidRequest{req.CurrentPid},
+		Context: l.ctx,
+	})
+	defer response.Close()
+	if err != nil {
+		return nil, err
+	}
+	if response.Ok {
+		var data types.SendPidResponse
+		err := response.JSON(&data)
+		if err != nil {
+			return nil, err
+		}
+		return &types.SendPidResponse{
+			Code: 200,
+			Msg:  data.Msg,
+		}, nil
+	}
 
-	return
+	return &types.SendPidResponse{}, nil
 }

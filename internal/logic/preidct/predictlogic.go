@@ -38,6 +38,7 @@ func (l *PredictLogic) Predict(req *types.PredictRequest) (resp *types.PredictRe
 	if err != nil {
 		return nil, err
 	}
+	defer response.Close()
 	if response.Ok {
 		var data PredictInfo
 		err := response.JSON(&data)

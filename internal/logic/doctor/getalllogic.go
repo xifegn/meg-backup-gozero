@@ -23,8 +23,24 @@ func NewGetAllLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetAllLogi
 	}
 }
 
-func (l *GetAllLogic) GetAll(req *types.GetAllRequest) (resp *types.GetAllResponse, err error) {
-	// todo: add your logic here and delete this line
+func (l *GetAllLogic) GetAll(req *types.GetAllRequest) (resp []*types.GetAllResponse, err error) {
+	res, err := l.svcCtx.PatientModel.GetAllPatientInfoByDid(l.ctx, req.Did)
+	if err != nil {
+		return nil, err
+	}
+	PatientInfo := make([]*types.GetAllResponse, 0)
+	for _, item := range res {
+		PatientInfo = append(PatientInfo, &types.GetAllResponse{
+			Id:         item.Id,
+			Did:        item.Did,
+			Name:       item.Name,
+			Sex:        item.Sex,
+			Age:        item.Age,
+			UploadTime: item.UploadTime,
+			Code:       item.Code,
+			FilePath:   item.FilePath,
+		})
+	}
 
-	return
+	return PatientInfo, nil
 }

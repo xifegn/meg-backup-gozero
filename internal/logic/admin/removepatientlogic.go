@@ -24,7 +24,9 @@ func NewRemovePatientLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Rem
 }
 
 func (l *RemovePatientLogic) RemovePatient(req *types.RemovePatientRequest) (resp *types.RemovePatientResponse, err error) {
-	// todo: add your logic here and delete this line
-
-	return
+	err = l.svcCtx.PatientModel.Delete(l.ctx, req.Id)
+	if err != nil {
+		return nil, err
+	}
+	return &types.RemovePatientResponse{Message: "OK"}, nil
 }
