@@ -46,8 +46,17 @@ func (l *LoginLogic) Login(req *types.LoginRequest) (resp *types.LoginResponse, 
 		return nil, err
 	}
 
+	var token string
+	switch res.IsAdmin {
+	case 1:
+		token = "admin"
+	case 0:
+		token = "editor"
+	}
+
 	return &types.LoginResponse{
 		AccessToken:  accessToken,
 		AccessExpire: accessExpire,
+		Token:        token,
 	}, nil
 }
