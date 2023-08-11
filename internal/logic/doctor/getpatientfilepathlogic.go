@@ -2,6 +2,7 @@ package doctor
 
 import (
 	"context"
+	"errors"
 
 	"meg-backup-gozero/internal/svc"
 	"meg-backup-gozero/internal/types"
@@ -26,7 +27,7 @@ func NewGetPatientFilePathLogic(ctx context.Context, svcCtx *svc.ServiceContext)
 func (l *GetPatientFilePathLogic) GetPatientFilePath(req *types.GetPatientFilePathRequest) (resp []*types.GetPatientFilePathResponse, err error) {
 	res, err := l.svcCtx.PatientModel.FindPatientInfoByCode(l.ctx, req.Code)
 	if err != nil {
-		return nil, err
+		return nil, errors.New("Not found")
 	}
 	PatientFilePathInfoList := make([]*types.GetPatientFilePathResponse, 0)
 	for key, item := range res {

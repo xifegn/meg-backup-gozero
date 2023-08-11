@@ -3,6 +3,7 @@ package admin
 import (
 	"context"
 	"errors"
+	"fmt"
 	"meg-backup-gozero/internal/svc"
 	"meg-backup-gozero/internal/types"
 
@@ -25,10 +26,11 @@ func NewRemoveDoctorLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Remo
 
 func (l *RemoveDoctorLogic) RemoveDoctor(req *types.RemoveDoctorRequest) (resp *types.RemoveDoctorResponse, err error) {
 	res, err := l.svcCtx.DoctorModel.FindIdByUsername(l.ctx, req.Username)
+	fmt.Println(res)
 	if err != nil {
 		return nil, errors.New("user not found")
 	}
-	//fmt.Println(res)
+	fmt.Println(res)
 	err = l.svcCtx.DoctorModel.Delete(l.ctx, res)
 	if err != nil {
 		return nil, err
