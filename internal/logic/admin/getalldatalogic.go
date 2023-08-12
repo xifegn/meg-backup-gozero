@@ -46,5 +46,10 @@ func (l *GetAllDataLogic) GetAllData() (resp []*types.GetAllDataResponse, err er
 		Name:      "诊断书数量",
 		Value:     res[0].CaseCount,
 	})
+	data = append(data, &types.GetAllDataResponse{
+		CardValue: fmt.Sprintf("个数：%d次", res[0].FileCount),
+		Name:      "分割的次数",
+		Value:     res[0].FileCount,
+	})
 	return data, nil
 }
