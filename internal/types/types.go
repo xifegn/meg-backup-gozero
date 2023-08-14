@@ -67,6 +67,7 @@ type LoginRequest struct {
 type LoginResponse struct {
 	AccessToken  string `json:"accessToken"`
 	AccessExpire int64  `json:"accessExpire"`
+	Token        string `json:"token"`
 }
 
 type RegisterRequest struct {
