@@ -200,7 +200,7 @@ service main {
 }
 
 @server (
-	jwt: Auth
+//	jwt: Auth
 	group: doctor
 )
 service main{

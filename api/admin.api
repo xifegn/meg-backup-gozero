@@ -92,7 +92,7 @@ service main {
 
 
 @server (
-    jwt: Auth
+//    jwt: Auth
     group: admin
 )
 service main {

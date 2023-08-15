@@ -1,6 +1,6 @@
 Name: main
 Host: 0.0.0.0
-Port: 8888
+Port: 8009
 
 MaxBytes: 1073741824
 
@@ -13,7 +13,7 @@ Auth:
   AccessExpire: 86400
 
 CacheRedis:
-  - Host: 192.168.35.139:6379
+  - Host: 192.168.35.136:6379
     Pass: ""
     Type: node
 

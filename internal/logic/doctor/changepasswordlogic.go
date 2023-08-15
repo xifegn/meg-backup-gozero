@@ -32,6 +32,9 @@ func (l *ChangePasswordLogic) ChangePassword(req *types.ChangePasswordRequest) (
 		return nil, err
 	}
 	fmt.Println(res[0])
+	//if req.OldPassword != res[0].Password {
+	//	return nil, errors.New("old password error")
+	//}
 	if cryptx.PasswordEncrypt(l.svcCtx.Config.Salt, req.OldPassword) != res[0].Password {
 		return nil, errors.New("old password error")
 	}
