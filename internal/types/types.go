@@ -300,9 +300,9 @@ type AddQuotaResponse struct {
 type AdminGetAllDoctorResponse struct {
 	Id           int64  `json:"id"`
 	Name         string `json:"name"`
-	RegisterTime string `json:"registerTime"`
-	Telephone    string `json:"telephone"`
 	Username     string `json:"username"`
+	Telephone    string `json:"telephone"`
+	RegisterTime string `json:"registerTime"`
 }
 
 type TestResponse struct {
