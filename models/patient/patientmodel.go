@@ -57,7 +57,7 @@ func (m *customPatientModel) GetAllInformation(ctx context.Context) ([]*ChartDat
 }
 
 func (m *customPatientModel) FindPatientInfoByCode(ctx context.Context, code string) ([]*PatientFilePath, error) {
-	query := fmt.Sprintf("select patient_info.file_path from patient inner join patient_info on patient.code = patient_info.pid where code = $1")
+	query := fmt.Sprintf("select patient_info.file_path from patient inner join patient_info on patient.code = patient_info.pid where code = $1 and patient_info.file_path is not null")
 	var resp []*PatientFilePath
 	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, code)
 	switch err {
@@ -71,7 +71,7 @@ func (m *customPatientModel) FindPatientInfoByCode(ctx context.Context, code str
 }
 
 func (m *customPatientModel) GetAllPatientInfoByDid(ctx context.Context, did string) ([]*types.GetAllResponse, error) {
-	query := fmt.Sprintf("select p.id, p.did, p.name, p.sex, p.age, p.upload_time, p.code, COALESCE(pi.file_path, 'null') AS file_path from patient as p left outer join patient_info as pi on p.code = pi.pid where did=$1 order by p.id")
+	query := fmt.Sprintf("select p.id, p.did, p.name, p.sex, p.age, p.upload_time, p.code, COALESCE(pi.file_path, 'null') AS file_path from patient as p left outer join patient_info as pi on p.code = pi.pid and pi.id = (select max (id) from patient_info where pid = p.code) where did= $1 order by p.id;")
 	var resp []*types.GetAllResponse
 	err := m.QueryRowsNoCacheCtx(ctx, &resp, query, did)
 	switch err {
