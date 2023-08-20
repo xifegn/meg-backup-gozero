@@ -34,7 +34,7 @@ func (l *GetDoctorInfoLogic) GetDoctorInfo(req *types.GetDoctorInfoRequest) (res
 		Id:              res[0].Id,
 		SecretKey:       res[0].SecretKey,
 		Email:           res[0].Email,
-		Nickname:        res[0].Nickname,
+		Name:            res[0].Name,
 		Regions:         res[0].Regions,
 		SelfInformation: res[0].SelfInformation,
 	}, nil

@@ -36,7 +36,7 @@ func (l *GetAllLogic) GetAll(req *types.GetAllRequest) (resp []*types.GetAllResp
 			Name:       item.Name,
 			Sex:        item.Sex,
 			Age:        item.Age,
-			UploadTime: item.UploadTime,
+			UploadTime: item.UploadTime[:10],
 			Code:       item.Code,
 			FilePath:   item.FilePath,
 		})

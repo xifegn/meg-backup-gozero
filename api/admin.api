@@ -70,8 +70,8 @@ type (
 
     AdminGetAllDoctorResponse {
         Id      int64 `json:"id"`
-        Name    string `json:"name"`
         Username    string  `json:"username"`
+        Name    string `json:"name"`
         Telephone   string  `json:"telephone"`
         RegisterTime    string  `json:"registerTime"`
 

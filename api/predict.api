@@ -72,6 +72,7 @@ service main {
 }
 
 @server (
+//    timeout: 3s
     group: preidct
 )
 service main{

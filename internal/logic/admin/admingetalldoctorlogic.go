@@ -33,7 +33,7 @@ func (l *AdminGetAllDoctorLogic) AdminGetAllDoctor() (resp []*types.AdminGetAllD
 		doctorInfo = append(doctorInfo, &types.AdminGetAllDoctorResponse{
 			Id:           item.Id,
 			Name:         item.Name,
-			RegisterTime: item.RegisterTime,
+			RegisterTime: item.RegisterTime[:10],
 			Telephone:    item.Telephone,
 			Username:     item.Username,
 		})

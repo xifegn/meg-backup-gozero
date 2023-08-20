@@ -137,7 +137,7 @@ type GetDoctorInfoResponse struct {
 	Id              int64  `json:"id"`
 	SecretKey       string `json:"secretKey, optional"`
 	Email           string `json:"email"`
-	Nickname        string `json:"nickname"`
+	Name            string `json:"name"`
 	Regions         string `json:"regions"`
 	SelfInformation string `json:"self_information"`
 }
@@ -179,10 +179,10 @@ type RemoveFilePathResponse struct {
 
 type QuotaApplyInqueryResponse struct {
 	Id          int64  `json:"id"`
-	Username    string `json:"username"`
-	QuotaAmount string `json:"quota_amount"`
 	Amount      string `json:"amount"`
+	Username    string `json:"username"`
 	CreatedAt   string `json:"created_at"`
+	QuotaAmount string `json:"quota_amount"`
 }
 
 type QuotaApplyRemoveRequest struct {
@@ -299,8 +299,8 @@ type AddQuotaResponse struct {
 
 type AdminGetAllDoctorResponse struct {
 	Id           int64  `json:"id"`
-	Name         string `json:"name"`
 	Username     string `json:"username"`
+	Name         string `json:"name"`
 	Telephone    string `json:"telephone"`
 	RegisterTime string `json:"registerTime"`
 }

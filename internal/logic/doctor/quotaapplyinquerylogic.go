@@ -2,6 +2,7 @@ package doctor
 
 import (
 	"context"
+	"fmt"
 	"meg-backup-gozero/internal/svc"
 	"meg-backup-gozero/internal/types"
 
@@ -26,13 +27,20 @@ func (l *QuotaApplyInqueryLogic) QuotaApplyInquery() (resp []*types.QuotaApplyIn
 	res, _ := l.svcCtx.QuotaApplyModel.GetQuotaApply(l.ctx)
 	data := make([]*types.QuotaApplyInqueryResponse, 0)
 	for _, item := range res {
+
+		fmt.Println("createAt", item.CreatedAt)
+		fmt.Println("------------------------")
 		data = append(data, &types.QuotaApplyInqueryResponse{
 			Id:          item.Id,
 			Username:    item.Username,
 			QuotaAmount: item.QuotaAmount,
 			Amount:      item.Amount,
-			CreatedAt:   item.CreatedAt,
+			CreatedAt:   item.CreatedAt[:10],
 		})
+
+		//fmt.Printf("%T", item.CreatedAt)
+
 	}
+
 	return data, nil
 }
